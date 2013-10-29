@@ -12,6 +12,7 @@ import co.uk.jamalantonio.GetOffMyLawn.InputHandler;
 public class Player extends Living_Entity {
 
 	int score = 0;
+	int level = 1;
 	InputHandler input = new InputHandler();
 	
 	public Player(int width, int height, Image image, Game game, InputHandler input) {
@@ -48,10 +49,13 @@ public class Player extends Living_Entity {
 		this.y += ya;
 		
 		interact(getInteraction());
+		updateStats();
 	}
 	
 	@Override
 	public void paint(Graphics2D g) {
+		super.paint(g);
+		
 		Image image = new ImageIcon("resources/sprites/player1.png").getImage();
 		
 		if (face == 1) image = new ImageIcon("resources/sprites/player1.png").getImage();
@@ -69,8 +73,18 @@ public class Player extends Living_Entity {
 	@Override
 	public void interact(Entity e) {
 		Living_Entity ent = (Living_Entity) e;
-		if (ent != null && input.attack.down && tickTime % 60 == 0) {
+		if (ent != null && input.attack.down && tickTime % 20 == 0) {
 			ent.hurt(this.power);
+		}
+	}
+	
+	void updateStats() {
+		
+		if (score == Math.round((Math.pow(level, 2) / 2 + 5))) {
+			this.level++;
+			this.maxHealth = 9 + level;
+			this.health = maxHealth;
+			this.power++;
 		}
 	}
 	
@@ -82,5 +96,9 @@ public class Player extends Living_Entity {
 	
 	public int getScore() {
 		return score;
+	}
+	
+	public int getLevel() {
+		return level;
 	}
 }

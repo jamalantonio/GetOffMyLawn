@@ -55,6 +55,8 @@ public class Mob extends Living_Entity {
 
 	@Override
 	public void paint(Graphics2D g) {
+		super.paint(g);
+		
 		Image image = new ImageIcon("resources/sprites/zombie1.png").getImage();
 		
 		if (face == 1) image = new ImageIcon("resources/sprites/zombie1.png").getImage();
