@@ -25,7 +25,7 @@ public class WaveManager {
 	}
 	
 	void spawn(int wave) {
-		int num = (int) Math.pow(2, wave);
+		int num = (int) (2 * Math.pow(Math.E, 0.2 * wave));
 		
 		for (int i = 1; i <= num; i++) {
 			new Mob(24, 24, null, GAME, 5, 1, 1);

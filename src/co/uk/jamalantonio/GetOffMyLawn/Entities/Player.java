@@ -79,8 +79,10 @@ public class Player extends Living_Entity {
 	}
 	
 	void updateStats() {
+		int exp = score * 5;
+		int expNeeded = 10 * this.level * (1 + this.level);
 		
-		if (score == Math.round((Math.pow(level, 2) / 2 + 5))) {
+		if (exp >= expNeeded) {
 			this.level++;
 			this.maxHealth = 9 + level;
 			this.health = maxHealth;
