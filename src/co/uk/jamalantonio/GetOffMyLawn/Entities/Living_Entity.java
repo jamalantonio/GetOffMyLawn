@@ -38,7 +38,7 @@ public class Living_Entity extends Entity {
 	public void paint(Graphics2D g) {
 		String healthBar = "";
 		int per = this.health * 10 / maxHealth;
-		int hx = x - (((health * 3) - WIDTH) / 2);
+		int hx = x - (((per * 3) - WIDTH) / 2);
 		
 		for (int i = 1; i <= per; i++) {
 			healthBar = healthBar + "|";
