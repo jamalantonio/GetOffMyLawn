@@ -20,33 +20,33 @@ public class Player extends Living_Entity {
 		super(width, height, image, game, 10, 2, 2);
 		
 		this.input = input;
-		this.x = 250 - WIDTH;
-		this.y = 250 - HEIGHT;
+		setX(250 - getWidth());
+		setY(250 - getHeight());
 	}
 	
 	@Override
 	public void tick() {
 		super.tick();
 		
-		this.ya = 0;
-		this.xa = 0;
+		setYa(0);
+		setXa(0);
 		
-		if (input.up.down) this.face = 1;
-		if (input.right.down) this.face = 3;
-		if (input.down.down) this.face = 5;
-		if (input.left.down) this.face = 7;
-		if (input.up.down && input.right.down) this.face = 2;
-		if (input.right.down && input.down.down) this.face = 4;
-		if (input.down.down && input.left.down) this.face = 6;
-		if (input.left.down && input.up.down) this.face = 8;
+		if (input.up.down) setFace(1);
+		if (input.right.down) setFace(3);
+		if (input.down.down) setFace(5);
+		if (input.left.down) setFace(7);
+		if (input.up.down && input.right.down) setFace(2);
+		if (input.right.down && input.down.down) setFace(4);
+		if (input.down.down && input.left.down) setFace(6);
+		if (input.left.down && input.up.down) setFace(8);
 		
-		if (input.up.down && !collision().contains((byte) 1)) this.ya -= this.speed;
-		if (input.right.down && !collision().contains((byte) 3)) this.xa += this.speed;
-		if (input.down.down && !collision().contains((byte) 5)) this.ya += this.speed;
-		if (input.left.down && !collision().contains((byte) 7)) this.xa -= this.speed;
+		if (input.up.down && !collision().contains((byte) 1)) setYa(getYa() - getSpeed());
+		if (input.right.down && !collision().contains((byte) 3)) setXa(getXa() + getSpeed());
+		if (input.down.down && !collision().contains((byte) 5)) setYa(getYa() + getSpeed());
+		if (input.left.down && !collision().contains((byte) 7)) setXa(getXa() - getSpeed());
 		
-		this.x += xa;
-		this.y += ya;
+		setX(getX() + getXa());
+		setY(getY() + getYa());
 		
 		interact(getInteraction());
 		updateStats();
@@ -58,23 +58,23 @@ public class Player extends Living_Entity {
 		
 		Image image = new ImageIcon("resources/sprites/player1.png").getImage();
 		
-		if (face == 1) image = new ImageIcon("resources/sprites/player1.png").getImage();
-		if (face == 2) image = new ImageIcon("resources/sprites/player2.png").getImage();
-		if (face == 3) image = new ImageIcon("resources/sprites/player3.png").getImage();
-		if (face == 4) image = new ImageIcon("resources/sprites/player4.png").getImage();
-		if (face == 5) image = new ImageIcon("resources/sprites/player5.png").getImage();
-		if (face == 6) image = new ImageIcon("resources/sprites/player6.png").getImage();
-		if (face == 7) image = new ImageIcon("resources/sprites/player7.png").getImage();
-		if (face == 8) image = new ImageIcon("resources/sprites/player8.png").getImage();
+		if (getFace() == 1) image = new ImageIcon("resources/sprites/player1.png").getImage();
+		if (getFace() == 2) image = new ImageIcon("resources/sprites/player2.png").getImage();
+		if (getFace() == 3) image = new ImageIcon("resources/sprites/player3.png").getImage();
+		if (getFace() == 4) image = new ImageIcon("resources/sprites/player4.png").getImage();
+		if (getFace() == 5) image = new ImageIcon("resources/sprites/player5.png").getImage();
+		if (getFace() == 6) image = new ImageIcon("resources/sprites/player6.png").getImage();
+		if (getFace() == 7) image = new ImageIcon("resources/sprites/player7.png").getImage();
+		if (getFace() == 8) image = new ImageIcon("resources/sprites/player8.png").getImage();
 		
-		g.drawImage(image, x, y, GAME);
+		g.drawImage(image, getX(), getY(), getGame());
 	}
 	
 	@Override
 	public void interact(Entity e) {
 		Living_Entity ent = (Living_Entity) e;
-		if (ent != null && input.attack.down && tickTime % 20 == 0) {
-			ent.hurt(this.power);
+		if (ent != null && input.attack.down && getTickTime() % 20 == 0) {
+			ent.hurt(getPower());
 		}
 	}
 	
@@ -84,16 +84,16 @@ public class Player extends Living_Entity {
 		
 		if (exp >= expNeeded) {
 			this.level++;
-			this.maxHealth = 9 + level;
-			this.health = maxHealth;
-			this.power++;
+			setMaxHealth(9 + level);
+			setHealth(getMaxHealth());
+			setPower(getPower() + 1);
 		}
 	}
 	
 	@Override
 	void die() {
-		JOptionPane.showMessageDialog(GAME, "You scored: " + score, "Game Over", JOptionPane.YES_NO_OPTION);
-		GAME.gameOver();
+		JOptionPane.showMessageDialog(getGame(), "You scored: " + score, "Game Over", JOptionPane.YES_NO_OPTION);
+		getGame().gameOver();
 	}
 	
 	public int getScore() {

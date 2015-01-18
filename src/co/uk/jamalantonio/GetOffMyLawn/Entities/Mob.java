@@ -17,37 +17,37 @@ public class Mob extends Living_Entity {
 		
 		super(width, height, image, game, health, power, speed);
 		
-		this.x = (int) (Math.random() * 501);
-		this.y = (int) (Math.random() * 501);
+		setX((int) (Math.random() * 501));
+		setY((int) (Math.random() * 501));
 	}
 	
 	@Override
 	public void tick() {
 		super.tick();
 		
-		if (tickTime > 300) {
-			xa = 0;
-			ya = 0;
-			xd = GAME.player.getX();
-			yd = GAME.player.getY();
+		if (getTickTime() > 300) {
+			setXa(0);
+			setYa(0);
+			xd = getGame().player.getX();
+			yd = getGame().player.getY();
 			
 	
-			if (y > yd) this.face = 1; 
-			if (x < xd) this.face = 3; 
-			if (y < yd) this.face = 5;
-			if (x > xd) this.face = 7;  
-			if (y > yd && x < xd) this.face = 2;
-			if (x < xd && y < yd) this.face = 4;
-			if (y < yd && x > xd) this.face = 6;
-			if (x > xd && y > yd) this.face = 8;
+			if (getY() > yd) setFace(1); 
+			if (getX() < xd) setFace(3); 
+			if (getY() < yd) setFace(5);
+			if (getX() > xd) setFace(7);  
+			if (getY() > yd && getX() < xd) setFace(2);
+			if (getX() < xd && getY() < yd) setFace(4);
+			if (getY() < yd && getX() > xd) setFace(6);
+			if (getX() > xd && getY() > yd) setFace(8);
 			  
-			if (!collision().contains((byte) 1) && y > yd) ya -= this.speed;
-			if (!collision().contains((byte) 3) && x < xd) xa += this.speed; 
-			if (!collision().contains((byte) 5) && y < yd) ya += this.speed; 
-			if (!collision().contains((byte) 7) && x > xd) xa -= this.speed;
+			if (!collision().contains((byte) 1) && getY() > yd) setYa(getYa() - getSpeed());
+			if (!collision().contains((byte) 3) && getX() < xd) setXa(getXa() + getSpeed()); 
+			if (!collision().contains((byte) 5) && getY() < yd) setYa(getYa() + getSpeed()); 
+			if (!collision().contains((byte) 7) && getX() > xd) setXa(getXa() - getSpeed());
 			
-			this.x += xa;
-			this.y += ya;
+			setX(getX() + getXa());
+			setY(getY() + getYa());
 			
 			interact(getInteraction());
 		}
@@ -59,29 +59,29 @@ public class Mob extends Living_Entity {
 		
 		Image image = new ImageIcon("resources/sprites/zombie1.png").getImage();
 		
-		if (face == 1) image = new ImageIcon("resources/sprites/zombie1.png").getImage();
-		if (face == 2) image = new ImageIcon("resources/sprites/zombie2.png").getImage();
-		if (face == 3) image = new ImageIcon("resources/sprites/zombie3.png").getImage();
-		if (face == 4) image = new ImageIcon("resources/sprites/zombie4.png").getImage();
-		if (face == 5) image = new ImageIcon("resources/sprites/zombie5.png").getImage();
-		if (face == 6) image = new ImageIcon("resources/sprites/zombie6.png").getImage();
-		if (face == 7) image = new ImageIcon("resources/sprites/zombie7.png").getImage();
-		if (face == 8) image = new ImageIcon("resources/sprites/zombie8.png").getImage();
+		if (getFace() == 1) image = new ImageIcon("resources/sprites/zombie1.png").getImage();
+		if (getFace() == 2) image = new ImageIcon("resources/sprites/zombie2.png").getImage();
+		if (getFace() == 3) image = new ImageIcon("resources/sprites/zombie3.png").getImage();
+		if (getFace() == 4) image = new ImageIcon("resources/sprites/zombie4.png").getImage();
+		if (getFace() == 5) image = new ImageIcon("resources/sprites/zombie5.png").getImage();
+		if (getFace() == 6) image = new ImageIcon("resources/sprites/zombie6.png").getImage();
+		if (getFace() == 7) image = new ImageIcon("resources/sprites/zombie7.png").getImage();
+		if (getFace() == 8) image = new ImageIcon("resources/sprites/zombie8.png").getImage();
 		
-		g.drawImage(image, x, y, GAME);
+		g.drawImage(image, getX(), getY(), getGame());
 	}
 	
 	@Override
 	public void interact(Entity e) {
 		Living_Entity ent = (Living_Entity) e;
-		if (ent != null && tickTime % 100 == 0 && ent == GAME.player) {
-			ent.hurt(this.power);
+		if (ent != null && getTickTime() % 100 == 0 && ent == getGame().player) {
+			ent.hurt(getPower());
 		}
 	}
 	
 	@Override
 	void die() {
-		GAME.player.score++;
-		GAME.entities.remove(this);
+		getGame().player.score++;
+		getGame().entities.remove(this);
 	}
 }

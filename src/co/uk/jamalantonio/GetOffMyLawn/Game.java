@@ -29,24 +29,17 @@ public class Game extends JPanel {
 	
 	public Player player = new Player(24, 24, null, this, input);
 	public WaveManager wm = new WaveManager(this);
-	/*public Mob mob = new Mob(24, 24, null, this, 5, 1, 1);
-	public Mob mob2 = new Mob(24, 24, null, this, 5, 1, 1);
-	public Mob mob3 = new Mob(24, 24, null, this, 5, 1, 1);
-	public Mob mob4 = new Mob(24, 24, null, this, 5, 1, 1);
-	public Mob mob5 = new Mob(24, 24, null, this, 5, 1, 1);
-	public Mob mob6 = new Mob(24, 24, null, this, 5, 1, 1);
-	public Mob mob7 = new Mob(24, 24, null, this, 5, 1, 1);
-	public Mob mob8 = new Mob(24, 24, null, this, 5, 1, 1);
-	public Mob mob9 = new Mob(24, 24, null, this, 5, 1, 1);
-	public Mob mob10 = new Mob(24, 24, null, this, 5, 1, 1);*/
 	
 	public Game() {
+		
 		addKeyListener(input);
 		setFocusable(true);
-        setBackground(new Color(0, 128, 0)); 
+        setBackground(new Color(0, 128, 0));
+        
 	}
 	 
 	public static void main(String[] args) throws InterruptedException {
+		
 		JFrame frame = new JFrame("Get Off My Lawn");
 		Game game = new Game();
 		
@@ -57,13 +50,16 @@ public class Game extends JPanel {
 		frame.setVisible(true);
 		
 		while(playing) {
+			
 			game.tick();
 			game.repaint();
 			Thread.sleep(10);
+			
 		}
 	}
 	
 	private void tick() {
+		
 		wm.tick();
 		
 		for (int i = 0; i < entities.size(); i++) {
@@ -74,6 +70,7 @@ public class Game extends JPanel {
 	
 	@Override
 	public void paint(Graphics g) {
+		
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -82,20 +79,24 @@ public class Game extends JPanel {
 		BufferedImage image = null;
 		
 		try {
+			
 			image = (BufferedImage)ImageIO.read(new File("resources/backgrounds/grass1.png"));
+		
 		} catch (IOException e) {
+			
 			e.printStackTrace();
+			
 		}
 		
 		image.getGraphics().drawImage(image, 0, 0, null);
 		g.drawImage(image, 0 , 0, null);
 		
 		for (int i = 0; i < entities.size(); i++) {
+			
 			entities.get(i).paint(g2d);
+			
 		}
 		
-		
-		//Temporary "GUI"
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font("Veranda", Font.BOLD, 15));
 		g2d.drawString("Score: " + String.valueOf(player.getScore()), 10, 15);
@@ -104,7 +105,5 @@ public class Game extends JPanel {
 		
 	}
 	
-	public void gameOver() {
-		playing = false;
-	}
+	public void gameOver() { playing = false; }
 }
