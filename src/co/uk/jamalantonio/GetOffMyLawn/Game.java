@@ -21,7 +21,6 @@ import co.uk.jamalantonio.GetOffMyLawn.Entities.Player;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel {
-	
 	public static boolean playing = true;
 	
 	public List<Entity> entities = new ArrayList<Entity>();
@@ -31,15 +30,12 @@ public class Game extends JPanel {
 	public WaveManager wm = new WaveManager(this);
 	
 	public Game() {
-		
 		addKeyListener(input);
 		setFocusable(true);
         setBackground(new Color(0, 128, 0));
-        
 	}
 	 
 	public static void main(String[] args) throws InterruptedException {
-		
 		JFrame frame = new JFrame("Get Off My Lawn");
 		Game game = new Game();
 		
@@ -50,27 +46,22 @@ public class Game extends JPanel {
 		frame.setVisible(true);
 		
 		while(playing) {
-			
 			game.tick();
 			game.repaint();
 			Thread.sleep(10);
-			
 		}
 	}
 	
 	private void tick() {
-		
 		wm.tick();
 		
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).tick();
 		}
-		
 	}
 	
 	@Override
 	public void paint(Graphics g) {
-		
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -79,22 +70,16 @@ public class Game extends JPanel {
 		BufferedImage image = null;
 		
 		try {
-			
 			image = (BufferedImage)ImageIO.read(new File("resources/backgrounds/grass1.png"));
-		
 		} catch (IOException e) {
-			
 			e.printStackTrace();
-			
 		}
 		
 		image.getGraphics().drawImage(image, 0, 0, null);
 		g.drawImage(image, 0 , 0, null);
 		
 		for (int i = 0; i < entities.size(); i++) {
-			
 			entities.get(i).paint(g2d);
-			
 		}
 		
 		g2d.setColor(Color.WHITE);
@@ -102,8 +87,9 @@ public class Game extends JPanel {
 		g2d.drawString("Score: " + String.valueOf(player.getScore()), 10, 15);
 		g2d.drawString("Wave: " + String.valueOf(wm.getWave()), 10, 30);
 		g2d.drawString("Level: " + String.valueOf(player.getLevel()), 10, 45);
-		
 	}
 	
-	public void gameOver() { playing = false; }
+	public void gameOver() {
+		playing = false; 
+	}
 }
